@@ -5,7 +5,7 @@ class Historian:
     def __init__(self, file: list[str]) -> None:
         self.file = file
 
-    def answer(self) -> int, int:
+    def answer(self) -> int:
         clean_list = [x.split() for x in self.file]
 
         for i, element in enumerate(clean_list):
@@ -53,16 +53,15 @@ class Historian:
         return count
 
     def case_check(self, level: list[(int, int)]) -> bool:
-        is_valid = False
-        for i, _ in enumerate(level):
+        for i in range(len(level)):
             modified_report = [x for j, x in enumerate(level) if j != i]
 
             if self.increase_or_decrease(modified_report) and self.adjacent_levels(
                 modified_report
             ):
-                is_valid = True
+                return True
 
-        return is_valid
+        return False
 
 
 def main(filename: str) -> str:
