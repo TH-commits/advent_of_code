@@ -64,7 +64,7 @@ class Historian:
         return False
 
 
-def main(filename: str) -> str:
+def main(filename: str) -> None:
     with open(filename) as outfile:
         file = outfile.read().splitlines()
 
