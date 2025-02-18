@@ -23,7 +23,7 @@ class Mul:
                 a, b = self.parse_number(match)
                 total_line += a * b
 
-        return matches
+        return total_line
 
     def parse_number(self, x: str) -> int:
         numbers = re.findall(r"\d{1,3}", x)
