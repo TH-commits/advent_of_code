@@ -50,8 +50,6 @@ class Printer:
                 present.append(element)
             else:
                 absent.append(element)
-
-        present.sort(key=lambda x: directory_int[x])
         
         new_list = present+absent
 
