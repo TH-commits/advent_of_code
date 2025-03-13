@@ -17,8 +17,7 @@ class Search:
             (-1, -1),
         ]
 
-        self.diagonal = [(1, 1), (-1, -1)]
-        self.antidiagonal = [(1, -1), (-1, 1)]
+        self.diagonal = [(1, 1), (-1, -1), (1, -1), (-1, 1)]
         self.word = word_input
 
     def result(self) -> int:
@@ -43,10 +42,7 @@ class Search:
                 if self.file[i][j] == self.word[0]:
                     for coorX, coorY in self.diagonal:
                         if self.dfs(coorX, coorY, 0, i, j):
-                            result.append(self.a_list(coorX, coorY, i, j))
-                    for coorX, coorY in self.antidiagonal:
-                        if self.dfs(coorX, coorY, 0, i, j):
-                            result.append(self.a_list(coorX, coorY, i, j))
+                            result.append((coorX + i, coorY + j))
 
         for item in result:
             if item in seen:
@@ -56,30 +52,14 @@ class Search:
 
         return len(duplicates)
 
-    def a_list(self, coorX: int, coorY: int, x: int, y: int) -> dict[str:int]:
-        res = {}
-        key = self.file[x + coorX][y + coorY]
-        values = (
-            x + coorX,
-            y + coorY,
-        )
-
-        if key in res:
-            res[key].extend(values)
-
-        else:
-            res[key] = values
-
-        return res
-
     def dfs(self, coorX: int, coorY: int, index: int, x: int, y: int) -> bool:
         if index == len(self.word):
             return True
 
-        if self.out_of_bounds(x, y) and self.file[x][y] == self.word[index]:
+        if self.in_bounds(x, y) and self.file[x][y] == self.word[index]:
             return self.dfs(coorX, coorY, index + 1, x + coorX, y + coorY)
 
-    def out_of_bounds(self, x: int, y: int) -> bool:
+    def in_bounds(self, x: int, y: int) -> bool:
         return 0 <= x < self.rows and 0 <= y < self.cols
 
 
