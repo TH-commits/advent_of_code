@@ -15,6 +15,7 @@ class Guard:
             for j in range(self.cols):
                 if self.file[i][j] == self.char:
                     return self.guard_check(i, j)
+        return 0
 
     def guard_check(self, x: int, y: int) -> int:
         dx, dy = -1, 0
@@ -37,13 +38,7 @@ class Guard:
 
 
 def file_clean(file: list[str]) -> list[list[str]]:
-    guard_path = []
-
-    for row in file:
-        path = [letter for letter in row]
-        guard_path.append(path)
-
-    return guard_path
+    return [list(row) for row in file]
 
 
 def main(filename: str) -> None:
