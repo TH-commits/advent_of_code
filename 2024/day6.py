@@ -10,12 +10,15 @@ class Guard:
         self.block = "#"
         self.period = "."
 
-    def result(self) -> int:
+    def result(self) -> tuple[int, int]:
+        part_2 = 0
         for i in range(self.rows):
             for j in range(self.cols):
                 if self.file[i][j] == self.char:
-                    return self.guard_check(i, j)
-        return 0
+                    part_1 = self.guard_check(i, j)
+                    if self.loop_check(i, j):
+                        part_2 += 1
+        return part_1, part_2
 
     def guard_check(self, x: int, y: int) -> int:
         dx, dy = -1, 0
@@ -33,6 +36,30 @@ class Guard:
 
         return len(visited)
 
+    def loop_check(self, x: int, y: int) -> int:
+        dx, dy = -1, 0
+        visited = set()
+
+        while True:
+            print(f"Visiting: {(x, y, dx, dy)}")
+            if (x, y, dx, dy) in visited:
+                print("Cycle Detected!")
+                print(f"{(x, y, dy, -dx)}")
+                return True
+            visited.add((x, y, dx, dy))
+            if not self.in_bounds(x + dx, y + dy):
+                break
+            if self.file[x + dx][y + dy] == self.block:
+                dx, dy = dy, -dx
+            else:
+                x += dx
+                y += dy
+
+        print("No Cycle Detected")
+        return False
+
+        # return visited
+
     def in_bounds(self, x: int, y: int) -> bool:
         return 0 <= x < self.rows and 0 <= y < self.cols
 
@@ -49,7 +76,11 @@ def main(filename: str) -> None:
 
         result = Guard(new_file)
 
-        print(f"Part 1: {result.result()}")
+        part1, part2 = result.result()
+
+        print(f"Part 1: {part1}")
+
+        print(f"Part 2: {part2}")
 
 
 main(sys.argv[1])
