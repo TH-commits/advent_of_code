@@ -2,8 +2,10 @@ import sys
 
 
 class Operator:
-    def __init__(self, file: str):
+    def __init__(self, file: list[str]):
         self.file = file
+        self.add = "+"
+        self.multiply = "*"
 
     def clean_file(self) -> dict[int, list[int]]:
         equation_dict = {}
@@ -23,14 +25,18 @@ class Operator:
     def part_1(self) -> int:
         part1 = 0
 
-        for key, value in self.clean_file():
-            if self.calculate:
+        for key, value_list in self.clean_file().items():
+            if self.calculate(value_list, key):
                 part1 += key
 
         return part1
 
-    def calculate(self, equation: dict[int, list[int]]) -> bool:
-        pass
+    def calculate(self, value_list: list[int], key: int) -> bool:
+        res = 1
+        for value in value_list:
+            res = res * value
+            if key == res:
+                return True
 
 
 def main(filename: str) -> None:
@@ -39,7 +45,9 @@ def main(filename: str) -> None:
 
         part1 = Operator(result)
 
-        print(part1.clean_file())
+        print(part1.part_1())
+
+        # print(part1.clean_file())
 
 
 main(sys.argv[1])
