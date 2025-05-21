@@ -37,11 +37,16 @@ class Operator:
         if value > key or index >= len(value_list):
             return False
 
+        combined_value_str = [str(value) for value in value_list]
+        combined_value = int("".join(combined_value_str))
+
+        combine = self.is_valid(combined_value, key, value_list, index + 1)
+
         mult = self.is_valid(value * value_list[index], key, value_list, index + 1)
 
         add = self.is_valid(value + value_list[index], key, value_list, index + 1)
 
-        return mult or add
+        return mult or add or combine
 
 
 def main(filename: str) -> None:
