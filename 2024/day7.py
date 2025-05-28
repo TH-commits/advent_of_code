@@ -1,5 +1,7 @@
 import sys
 
+import math
+
 
 class Operator:
     def __init__(self, file: list[str]):
@@ -32,7 +34,7 @@ class Operator:
         return part1
 
     def is_valid(self, value: int, key: int, value_list: list[int], index: int) -> bool:
-        if value == key:
+        if value == key and index == len(value_list):
             return True
         if value > key or index >= len(value_list):
             return False
@@ -48,9 +50,10 @@ class Operator:
         return mult or add or combine
 
     def combine_numbers(self, num1: int, num2: int) -> int:
-        multiplier = 10
-        while num2 >= multiplier:
-            multiplier *= 10
+        if num2 == 0:
+            multiplier = 1
+        else:
+            multiplier = 10 ** (int(math.log10(num2)) + 1)
         return num1 * multiplier + num2
 
 
@@ -60,7 +63,7 @@ def main(filename: str) -> None:
 
         part1 = Operator(result)
 
-        print(f"Part 1 Solution: {part1.part_1()}")
+        print(f"Part 1/2 Solution: {part1.part_1()}")
 
 
 main(sys.argv[1])
