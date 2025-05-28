@@ -37,7 +37,7 @@ class Operator:
         if value > key or index >= len(value_list):
             return False
 
-        combined_value_str = [str(value) for value in value_list]
+        combined_value_str = [str(value), str(value_list[index])]
         combined_value = int("".join(combined_value_str))
 
         combine = self.is_valid(combined_value, key, value_list, index + 1)
