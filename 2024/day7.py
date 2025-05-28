@@ -37,8 +37,7 @@ class Operator:
         if value > key or index >= len(value_list):
             return False
 
-        combined_value_str = [str(value), str(value_list[index])]
-        combined_value = int("".join(combined_value_str))
+        combined_value = self.combine_numbers(value, value_list[index])
 
         combine = self.is_valid(combined_value, key, value_list, index + 1)
 
@@ -47,6 +46,12 @@ class Operator:
         add = self.is_valid(value + value_list[index], key, value_list, index + 1)
 
         return mult or add or combine
+
+    def combine_numbers(self, num1: int, num2: int) -> int:
+        multiplier = 10
+        while num2 >= multiplier:
+            multiplier *= 10
+        return num1 * multiplier + num2
 
 
 def main(filename: str) -> None:
